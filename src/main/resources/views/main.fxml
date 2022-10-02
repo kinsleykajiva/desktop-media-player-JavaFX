@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSlider?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane prefHeight="741.0" prefWidth="1147.0" styleClass="root" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="africa.jopen.controllers.MainController">
+   <children>
+      <BorderPane>
+         <center>
+            <AnchorPane fx:id="mainAnchorPanee" prefHeight="200.0" prefWidth="200.0" styleClass="ancher-pane-one">
+               <children>
+                  <TableView fx:id="tableViewPlaylist" layoutX="70.0" layoutY="40.0" prefHeight="593.0" prefWidth="1029.0" style="-fx-background-color: translucent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
+                     <columns>
+                        <TableColumn fx:id="title1" editable="false" minWidth="50.0" prefWidth="163.20001524686813" sortable="false" text="Title" />
+                        <TableColumn fx:id="artist1" editable="false" minWidth="50.0" prefWidth="78.4000244140625" sortable="false" text="Artist" />
+                        <TableColumn fx:id="album1" editable="false" minWidth="50.0" prefWidth="71.19993591308594" sortable="false" text="Album" />
+                        <TableColumn fx:id="genre1" editable="false" minWidth="72.0" prefWidth="72.0" sortable="false" text="Genre" />
+                        <TableColumn fx:id="year1" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Year" />
+                        <TableColumn fx:id="length1" editable="false" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" sortable="false" text="Length" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <VBox fx:id="vboxNavBar" alignment="CENTER" layoutX="10.0" prefHeight="741.0" prefWidth="60.0" styleClass="nav-bar" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label text="DM" textAlignment="CENTER" textFill="WHITE" underline="true" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Player" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                           </children>
+                        </VBox>
+                        <VBox fx:id="vboxRecents" alignment="CENTER" prefHeight="46.0" prefWidth="89.0" style="-fx-background-color: #1d1c24; -fx-cursor: hand;">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/recent@32-px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="80.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox fx:id="vboxAudios" alignment="CENTER" layoutX="10.0" layoutY="358.0" prefHeight="46.0" prefWidth="89.0" style="-fx-background-color: #1d1c24; -fx-cursor: hand;">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/audios@32-px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox fx:id="vboxVideos" alignment="CENTER" layoutX="10.0" layoutY="386.0" prefHeight="46.0" prefWidth="89.0" style="-fx-background-color: #1d1c24; -fx-cursor: hand;">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/videos@32-px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox fx:id="vboxPlayLists" alignment="CENTER" layoutX="10.0" layoutY="377.0" prefHeight="46.0" prefWidth="89.0" style="-fx-background-color: #1d1c24; -fx-cursor: hand;">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/playlist@32-px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox fx:id="vboxSettings" alignment="CENTER" layoutX="10.0" layoutY="414.0" prefHeight="46.0" prefWidth="89.0" style="-fx-background-color: #1d1c24; -fx-cursor: hand;">
+                           <children>
+                              <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/settings@32-px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="160.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <HBox fx:id="hboxWindowsControlls" alignment="CENTER" layoutX="1045.0" prefHeight="35.0" prefWidth="95.0" spacing="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fx:id="imgBtnMinimize" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../images/minimize@32-px.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgBtnFullScreen" fitHeight="22.0" fitWidth="22.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../images/fullscreen@32-px.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgBtnClose" fitHeight="28.0" fitWidth="22.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../images/close@32-px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hboxSelectFiles" layoutX="450.0" layoutY="200.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <ImageView fx:id="imgAddFile" fitHeight="120.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../images/add-32-px.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgAddFolder" fitHeight="120.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../images/add-folder-32-px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="60.0" prefWidth="1099.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="1099.0" stylesheets="@../styles/player-control-panel.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <BorderPane fx:id="bottomPane" prefHeight="61.0" prefWidth="1147.0" stylesheets="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <left>
+                              <HBox alignment="CENTER" spacing="11.0">
+                                 <padding>
+                                    <Insets right="29" />
+                                 </padding>
+                                 <children>
+                                    <Label fx:id="labAlbum" maxHeight="60" maxWidth="60" minHeight="60" minWidth="60" prefHeight="60" prefWidth="60">
+                                       <graphic>
+                                          <ImageView fx:id="labAlbumImage" fitHeight="44.0" fitWidth="46.0">
+                                             <image>
+                                                <Image url="@../images/audios@64-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="6.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="labPlayLast" style="-fx-cursor: hand;">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                                             <image>
+                                                <Image url="@../images/prev@32-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label fx:id="labPlay" style="-fx-cursor: hand;">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                                             <image>
+                                                <Image url="@../images/play@32-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label fx:id="labPlayNext" style="-fx-cursor: hand;">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                                             <image>
+                                                <Image url="@../images/next@32-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </left>
+                           <center>
+                              <BorderPane>
+                                 <top>
+                                    <BorderPane>
+                                       <left>
+                                          <HBox alignment="CENTER_LEFT" spacing="3">
+                                             <padding>
+                                                <Insets top="10" />
+                                             </padding>
+                                             <children>
+                                                <Label fx:id="labMusicName" text="labMusicName" textFill="WHITE" />
+                                                <Label prefHeight="18.0" prefWidth="20.0" style="-fx-text-fill: #979797;" textFill="WHITE" />
+                                                <Label fx:id="labMusicSinger" text="labMusicSinger" textFill="#f5f5f5" />
+                                             </children>
+                                          </HBox>
+                                       </left>
+                                       <right>
+                                          <HBox alignment="CENTER_RIGHT" spacing="3">
+                                             <padding>
+                                                <Insets top="10" />
+                                             </padding>
+                                             <children>
+                                                <Label fx:id="labPlayedTime" text="00:00" textFill="WHITE" />
+                                                <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / " textFill="WHITE" />
+                                                <Label fx:id="labTotalTime" text="00:00" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                       </right>
+                                    </BorderPane>
+                                 </top>
+                                 <center>
+                                    <StackPane>
+                                       <padding>
+                                          <Insets bottom="11" />
+                                       </padding>
+                                       <children>
+                                          <JFXSlider fx:id="mediaSlider" prefHeight="15.0" prefWidth="578.0" styleClass="progress-bar" />
+                                       </children>
+                                    </StackPane>
+                                 </center>
+                              </BorderPane>
+                           </center>
+                           <right>
+                              <HBox alignment="CENTER" prefWidth="280" spacing="12">
+                                 <padding>
+                                    <Insets top="10" />
+                                 </padding>
+                                 <children>
+                                    <Label fx:id="labSoundIcon" style="-fx-padding: 0 0 0 10px; -fx-cursor: hand;">
+                                       <graphic>
+                                          <ImageView fitHeight="19" fitWidth="19">
+                                             <image>
+                                                <Image url="@../images/volume@32-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <StackPane>
+                                       <children>
+                                          <JFXSlider fx:id="volumeSlider" style="-fx-cursor: hand;" styleClass="volume-slider" />
+                                       </children>
+                                    </StackPane>
+                                    <Label fx:id="labPlayModeIcon" style="-fx-cursor: hand;">
+                                       <graphic>
+                                          <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/loop@32-px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <HBox fx:id="hBoxPlayListIcon" alignment="CENTER" spacing="3">
+                                       <children>
+                                          <Label fx:id="labPlayListCount" prefHeight="20.0" prefWidth="20.0" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #2c2c2d;-fx-background-radius: 20;-fx-alignment: center;" text="x1">
+                                             <font>
+                                                <Font size="7.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </right>
+                           <styleClass>
+                              <String fx:value="root_pane_controller" />
+                              <String fx:value=".control-pane" />
+                           </styleClass>
+                        </BorderPane>
+                     </children></AnchorPane>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+      <AnchorPane fx:id="drawerPane" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <StackPane fx:id="stackpaneInfrontView" prefHeight="693.0" prefWidth="1099.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ProgressBar fx:id="progressBarProgress" prefHeight="20.0" prefWidth="366.0" />
+                        <Label text="Processing Files... Please hold" textFill="WHITE">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="cover-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <BorderPane fx:id="sliderPane" prefHeight="200.0" prefWidth="300.0" styleClass="slider-pane" translateX="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <ListView fx:id="listView" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="666.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <Pane prefHeight="67.0" prefWidth="300.0" styleClass="slider-pane-top" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="btnAddPlayList" layoutX="25.0" layoutY="13.0" prefHeight="40.0" prefWidth="255.0" styleClass="add-btn" text="Add PlayList">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/add-to-playlist@64-px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
+               </top>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+
+   </children>
+</StackPane>

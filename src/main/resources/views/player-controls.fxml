@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSlider?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="root_pane_controller" stylesheets="@../styles/player-control-panel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane fx:id="bottomPane" prefHeight="61.0" prefWidth="1099.0" stylesheets="">
+      <left>
+          <HBox alignment="CENTER" spacing="11.0">
+              <padding>
+                  <Insets right="29" />
+              </padding>
+              <children>
+                  <Label fx:id="labAlbum" maxHeight="60" maxWidth="60" minHeight="60" minWidth="60" prefHeight="60" prefWidth="60">
+                      <graphic>
+                          <ImageView fitHeight="44.0" fitWidth="46.0">
+                           <image>
+                              <Image url="@../images/audios@64-px.png" />
+                           </image>
+                        </ImageView>
+                      </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="6.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labPlayLast">
+                      <graphic>
+                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                              <image>
+                                  <Image url="@../images/prev@32-px.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                  </Label>
+                  <Label fx:id="labPlay">
+                      <graphic>
+                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                              <image>
+                                  <Image url="@../images/play@32-px.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                  </Label>
+                  <Label fx:id="labPlayNext">
+                      <graphic>
+                          <ImageView fitHeight="25.0" fitWidth="25.0" styleClass="control-button">
+                              <image>
+                                  <Image url="@../images/next@32-px.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                  </Label>
+              </children>
+          </HBox>
+      </left>
+      <center>
+          <BorderPane>
+              <top>
+                  <BorderPane>
+                      <left>
+                          <HBox alignment="CENTER_LEFT" spacing="3">
+                              <padding>
+                                  <Insets top="10" />
+                              </padding>
+                              <children>
+                                  <Label fx:id="labMusicName" text="labMusicName" textFill="WHITE" />
+                                  <Label prefHeight="18.0" prefWidth="20.0" style="-fx-text-fill: #979797;" textFill="WHITE" />
+                                  <Label fx:id="labMusicSinger" text="labMusicSinger" textFill="#f5f5f5" />
+                              </children>
+                          </HBox>
+                      </left>
+                      <right>
+                          <HBox alignment="CENTER_RIGHT" spacing="3">
+                              <padding>
+                                  <Insets top="10" />
+                              </padding>
+                              <children>
+                                  <Label fx:id="labPlayedTime" text="00:00" textFill="WHITE" />
+                                  <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / " textFill="WHITE" />
+                                  <Label fx:id="labTotalTime" text="00:00" textFill="WHITE" />
+                              </children>
+                          </HBox>
+                      </right>
+                  </BorderPane>
+              </top>
+              <center>
+                  <StackPane>
+                      <padding>
+                          <Insets bottom="11" />
+                      </padding>
+                      <children>
+                        <JFXSlider fx:id="mediaSlider" prefHeight="15.0" prefWidth="578.0" styleClass="progress-bar" />
+                      </children>
+                  </StackPane>
+              </center>
+          </BorderPane>
+      </center>
+      <right>
+          <HBox alignment="CENTER" prefWidth="280" spacing="12">
+              <padding>
+                  <Insets top="10" />
+              </padding>
+              <children>
+                  <Label fx:id="labSoundIcon" style="-fx-padding: 0 0 0 10px;">
+                      <graphic>
+                          <ImageView fitHeight="19" fitWidth="19">
+                              <image>
+                                  <Image url="@../images/volume@32-px.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                  </Label>
+                  <StackPane>
+                      <children>
+                        <JFXSlider fx:id="volumeSlider" styleClass="volume-slider" />
+                      </children>
+                  </StackPane>
+                  <Label fx:id="labPlayModeIcon">
+                      <graphic>
+                          <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                              <image>
+                                  <Image url="@../images/loop@32-px.png" />
+                              </image>
+                          </ImageView>
+                      </graphic>
+                  </Label>
+                  <HBox fx:id="hBoxPlayListIcon" alignment="CENTER" spacing="3">
+                      <children>
+                          <Label fx:id="labPlayListCount" prefHeight="20.0" prefWidth="20.0" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;" text="x1">
+                              <font>
+                                  <Font size="7.0" />
+                              </font>
+                          </Label>
+                      </children>
+                  </HBox>
+              </children>
+          </HBox>
+      </right>
+         <styleClass>
+            <String fx:value="root_pane_controller" />
+            <String fx:value=".control-pane" />
+         </styleClass>
+      </BorderPane>
+   </children>
+</Pane>
