@@ -162,6 +162,9 @@ public class MainController {
 
     @FXML
     void initialize() {
+        labMusicName.setText("--");
+        labMusicSinger.setText("--");
+        
         title1.setCellValueFactory(new PropertyValueFactory<MyMedia,String>("title"));
         artist1.setCellValueFactory(new PropertyValueFactory<MyMedia,String>("artist"));
         album1.setCellValueFactory(new PropertyValueFactory<MyMedia,String>("album"));
@@ -178,7 +181,7 @@ public class MainController {
         });
 
         // this is the default view or screen
-        mainAnchorPanee.setStyle("-fx-background-image: null;-fx-background-color: rgba(47,46,54,0.89);");
+     //   mainAnchorPanee.setStyle("-fx-background-image: null;-fx-background-color: rgba(47,46,54,0.89);");
 
         vboxPlayLists.setOnMouseClicked(e -> {
             if (drawerPane.isVisible()) {
@@ -201,6 +204,13 @@ public class MainController {
                             "MP3 Files", "*.mp3", "*.wav", "*.flac");
             chooser.getExtensionFilters().add(fileExtensions);
             File f = chooser.showOpenDialog(currentStage());
+            if(f != null){
+                var  myMedia = extractFileObjects(f);
+                SqliteManager.getInstance().addMedia(myMedia);
+                temp.add(myMedia);
+                onDoneImportFiles();
+                tableViewPlaylist.setItems(temp);
+            }
         });
         imgAddFolder.setOnMouseClicked(e -> {
             DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -278,32 +288,32 @@ public class MainController {
             Stage stage = currentStage();
             stage.setIconified(true);
         });
-        var slideInLeft = new SlideInLeft(vboxNavBar);
-        slideInLeft.setOnFinished(ef -> {
+     //   var slideInLeft = new SlideInLeft(vboxNavBar);
+     /*   slideInLeft.setOnFinished(ef -> {
             vboxNavBar.setVisible(false);
-        });
+        });*/
         mainAnchorPanee.setOnMouseMoved(e -> {
-            if (!vboxNavBar.isVisible()) {
+           /* if (!vboxNavBar.isVisible()) {
                 vboxNavBar.setVisible(true);
             }
             if (!hboxWindowsControlls.isVisible()) {
                 hboxWindowsControlls.setVisible(true);
-            }
+            }*/
 
         });
         var slideOutLeft = new SlideOutLeft(vboxNavBar);
 
-        slideInLeft.setOnFinished(ef -> vboxNavBar.setVisible(true));
+       // slideInLeft.setOnFinished(ef -> vboxNavBar.setVisible(true));
 
 
         mainAnchorPanee.setOnMouseExited(e -> {
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+           /* PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(ee -> {
                 vboxNavBar.setVisible(false);
                 hboxWindowsControlls.setVisible(false);
             });
-            pause.play();
+            pause.play();*/
 
         });
 
@@ -337,37 +347,50 @@ public class MainController {
 
             return row;
         });
-        initMediaListerns();
+        initMediaListeners();
     }
 
-    private void initMediaListerns() {
+    private void initMediaListeners() {
         double percentage = 100.0;
         volumeSlider.setValue(50);
         mediaSlider.setValue(0);
 
         volumeSlider.setStyle("-track-color: linear-gradient(to right, tertiarySelectionColor " + percentage + "%, white " + percentage + ("%);"));
-        mediaSlider.valueChangingProperty().addListener((observableValue, aBoolean, t1) -> getInstance().changePosition(mediaSlider.getValue()));
+        mediaSlider.valueChangingProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(getInstance().getMediaPlayer() != null) {getInstance().changePosition(mediaSlider.getValue()); }else{
+                mediaSlider.setValue(0);
+            }
+        });
         volumeSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (getInstance().getMediaPlayer().isMute())
-                getInstance().getMediaPlayer().setMute(false);
-            if (volumeSlider.getValue() == 0) labSoundIcon.setDisable(true);
-            else if (volumeSlider.getValue() > 50) labSoundIcon.setDisable(true);
-            else labSoundIcon.setDisable(true);
-            getInstance().setVolume(volumeSlider.getValue() * 0.01);
-
-            double percentage1 = 100.0 * (newValue.doubleValue() - volumeSlider.getMin()) / (volumeSlider.getMax() - volumeSlider.getMin());
-            volumeSlider.setStyle("-track-color: linear-gradient(to right, tertiarySelectionColor " + percentage1 + "%, white " + percentage1 + ("%);"));
+                    if(getInstance().getMediaPlayer() != null) {
+                        if (getInstance().getMediaPlayer().isMute())
+                            getInstance().getMediaPlayer().setMute(false);
+                        if (volumeSlider.getValue() == 0) labSoundIcon.setDisable(true);
+                        else if (volumeSlider.getValue() > 50) labSoundIcon.setDisable(true);
+                        else labSoundIcon.setDisable(true);
+                        getInstance().setVolume(volumeSlider.getValue() * 0.01);
+    
+                        double percentage1 = 100.0 * (newValue.doubleValue() - volumeSlider.getMin()) / (volumeSlider.getMax() - volumeSlider.getMin());
+                        volumeSlider.setStyle("-track-color: linear-gradient(to right, tertiarySelectionColor " + percentage1 + "%, white " + percentage1 + ("%);"));
+                    }else{
+                    
+                    }
         });
         mediaSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if(getInstance().getMediaPlayer() != null){
             double curr = getInstance().getCurrentMediaTime();
             if (Math.abs(curr - newValue.doubleValue()) > 1) {
                 getInstance().changePosition(newValue.doubleValue());
                 getInstance().cancelTimer();
                 labPlayedTime.setText(formatTime(newValue.doubleValue()));
                 getInstance().beginTimer();
-            }
+                
+                
+                }
+          
             double percentage12 = 100.0 * (newValue.doubleValue() - mediaSlider.getMin()) / (mediaSlider.getMax() - mediaSlider.getMin());
             mediaSlider.setStyle("-track-color: linear-gradient(to right, tertiarySelectionColor " + percentage12 + "%, white " + percentage12 + ("%);"));
+            }
         });
         getInstance().isRunningProperty().addListener(observable -> {
             switchPlayPauseIcon();
@@ -451,6 +474,13 @@ public class MainController {
         stackpaneInfrontView.setVisible(false);
         drawerPane.setVisible(false);
         drawerPane.setDisable(false);// to remove click event so that the ares wont close
+        if(!temp.isEmpty()) {
+          /*  mainAnchorPanee.setStyle(
+                    "-fx-background-image: url('../wallpapers/2.jpg')" +
+                    "-fx-background-position: center center;" +
+                            "-fx-background-size: cover;"
+            );*/
+        }
     }
 
     private  void extractFilesFromFolder(File selectedDirectory) {
@@ -513,59 +543,7 @@ public class MainController {
                     directoryList.remove(0);
                 }
                 myFileList.forEach(file -> {
-                    MyMedia myMedia = new MyMedia(file);
-                    try {
-                        Mp3File mp3file = new Mp3File(file);
-                        if (mp3file.hasId3v2Tag()) {
-                            ID3v2 id3v2Tag = mp3file.getId3v2Tag();
-                            System.out.println("Length of this mp3 is: " + mp3file.getLengthInSeconds() + " seconds");
-                            myMedia.setLength(formatTime(mp3file.getLengthInSeconds() ));
-                            System.out.println("Bitrate: " + mp3file.getBitrate() + " kbps " + (mp3file.isVbr() ? "(VBR)" : "(CBR)"));
-//                            myMedia.setBitrate(mp3file.getBitrate() );
-                            System.out.println("Sample rate: " + mp3file.getSampleRate() + " Hz");
-//                            myMedia.setSampleRate(mp3file.getSampleRate() );
-                            System.out.println("Track: " + id3v2Tag.getTrack());
-//                            myMedia.setTrack(id3v2Tag.getTrack());
-                            System.out.println("Artist: " + id3v2Tag.getArtist());
-                            myMedia.setArtist(id3v2Tag.getArtist());
-                            System.out.println("Title: " + id3v2Tag.getTitle());
-                            if(id3v2Tag.getTitle() != null){
-                            myMedia.setTitle(id3v2Tag.getTitle());}
-                            System.out.println("Album: " + id3v2Tag.getAlbum());
-                            myMedia.setAlbum(id3v2Tag.getAlbum());
-                            System.out.println("Year: " + id3v2Tag.getYear());
-                            myMedia.setYear(id3v2Tag.getYear());
-                            System.out.println("Genre: " + id3v2Tag.getGenre() + " (" + id3v2Tag.getGenreDescription() + ")");
-                            myMedia.setGenre( id3v2Tag.getGenreDescription() );
-                            System.out.println("Comment: " + id3v2Tag.getComment());
-//                            myMedia.setComment(id3v2Tag.getComment());
-                            System.out.println("Lyrics: " + id3v2Tag.getLyrics());
-//                            myMedia.setLyrics(id3v2Tag.getLyrics());
-                            System.out.println("Composer: " + id3v2Tag.getComposer());
-//                            myMedia.setComposer(id3v2Tag.getComposer());
-                            System.out.println("Publisher: " + id3v2Tag.getPublisher());
-//                            myMedia.setPublisher(id3v2Tag.getPublisher());
-                            System.out.println("Original artist: " + id3v2Tag.getOriginalArtist());
-//                            myMedia.setOriginalArtist(id3v2Tag.getOriginalArtist());
-                            System.out.println("Album artist: " + id3v2Tag.getAlbumArtist());
-//                            myMedia.setAlbumArtist(id3v2Tag.getAlbumArtist());
-                            System.out.println("Copyright: " + id3v2Tag.getCopyright());
-//                            myMedia.setCopyright(id3v2Tag.getCopyright());
-                            System.out.println("URL: " + id3v2Tag.getUrl());
-//                            myMedia.setURL(id3v2Tag.getUrl());
-                            System.out.println("Encoder: " + id3v2Tag.getEncoder());
-//                            myMedia.setEncoder(id3v2Tag.getEncoder());
-                            byte[] albumImageData = id3v2Tag.getAlbumImage();
-                            if (albumImageData != null) {
-                                myMedia.setImageUrl(albumImageData);
-                                System.out.println("Have album image data, length: " + albumImageData.length + " bytes");
-                                System.out.println("Album image mime type: " + id3v2Tag.getAlbumImageMimeType());
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                   var  myMedia = extractFileObjects(file);
                     SqliteManager.getInstance().addMedia(myMedia);
                     temp.add(myMedia);
                 });
@@ -576,9 +554,66 @@ public class MainController {
         execute(loadingCacheTask);
 
     }
+    
+    private MyMedia extractFileObjects(File file ) {
+        try {
+            MyMedia myMedia = new MyMedia(file);
+            Mp3File mp3file = new Mp3File(file);
+            if (mp3file.hasId3v2Tag()) {
+                ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+                System.out.println("Length of this mp3 is: " + mp3file.getLengthInSeconds() + " seconds");
+                myMedia.setLength(formatTime(mp3file.getLengthInSeconds() ));
+                System.out.println("Bitrate: " + mp3file.getBitrate() + " kbps " + (mp3file.isVbr() ? "(VBR)" : "(CBR)"));
+//                            myMedia.setBitrate(mp3file.getBitrate() );
+                System.out.println("Sample rate: " + mp3file.getSampleRate() + " Hz");
+//                            myMedia.setSampleRate(mp3file.getSampleRate() );
+                System.out.println("Track: " + id3v2Tag.getTrack());
+//                            myMedia.setTrack(id3v2Tag.getTrack());
+                System.out.println("Artist: " + id3v2Tag.getArtist());
+                myMedia.setArtist(id3v2Tag.getArtist());
+                System.out.println("Title: " + id3v2Tag.getTitle());
+                if(id3v2Tag.getTitle() != null){
+                myMedia.setTitle(id3v2Tag.getTitle());}
+                System.out.println("Album: " + id3v2Tag.getAlbum());
+                myMedia.setAlbum(id3v2Tag.getAlbum());
+                System.out.println("Year: " + id3v2Tag.getYear());
+                myMedia.setYear(id3v2Tag.getYear());
+                System.out.println("Genre: " + id3v2Tag.getGenre() + " (" + id3v2Tag.getGenreDescription() + ")");
+                myMedia.setGenre( id3v2Tag.getGenreDescription() );
+                System.out.println("Comment: " + id3v2Tag.getComment());
+//                            myMedia.setComment(id3v2Tag.getComment());
+                System.out.println("Lyrics: " + id3v2Tag.getLyrics());
+//                            myMedia.setLyrics(id3v2Tag.getLyrics());
+                System.out.println("Composer: " + id3v2Tag.getComposer());
+//                            myMedia.setComposer(id3v2Tag.getComposer());
+                System.out.println("Publisher: " + id3v2Tag.getPublisher());
+//                            myMedia.setPublisher(id3v2Tag.getPublisher());
+                System.out.println("Original artist: " + id3v2Tag.getOriginalArtist());
+//                            myMedia.setOriginalArtist(id3v2Tag.getOriginalArtist());
+                System.out.println("Album artist: " + id3v2Tag.getAlbumArtist());
+//                            myMedia.setAlbumArtist(id3v2Tag.getAlbumArtist());
+                System.out.println("Copyright: " + id3v2Tag.getCopyright());
+//                            myMedia.setCopyright(id3v2Tag.getCopyright());
+                System.out.println("URL: " + id3v2Tag.getUrl());
+//                            myMedia.setURL(id3v2Tag.getUrl());
+                System.out.println("Encoder: " + id3v2Tag.getEncoder());
+//                            myMedia.setEncoder(id3v2Tag.getEncoder());
+                byte[] albumImageData = id3v2Tag.getAlbumImage();
+                if (albumImageData != null) {
+                    myMedia.setImageUrl(albumImageData);
+                    System.out.println("Have album image data, length: " + albumImageData.length + " bytes");
+                    System.out.println("Album image mime type: " + id3v2Tag.getAlbumImageMimeType());
+                }
+            }
+            return myMedia;
 
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    
     public String formatTime(double timeDouble) {
         if (timeDouble > 0) {
             int hh = (int) (timeDouble / 3600);
